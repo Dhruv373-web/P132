@@ -1,0 +1,42 @@
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+X = []
+for index, planet_mass in enumerate(planet_masses):
+  temp_list = [
+                  planet_radiuses[index],
+                  planet_mass
+              ]
+  X.append(temp_list)
+
+wcss = []
+for i in range(1, 11):
+    kmeans = KMeans(n_clusters=i, init='k-means++', random_state = 42)
+    kmeans.fit(X)
+    # inertia method returns wcss for that model
+    wcss.append(kmeans.inertia_)
+
+plt.figure(figsize=(10,5))
+sns.lineplot(range(1, 11), wcss, marker='o', color='red')
+plt.title('The Elbow Method')
+plt.xlabel('Number of clusters')
+plt.ylabel('WCSS')
+plt.show()
+# kmeans = KMeans(n_clusters = 4, init = 'k-means++', random_state = 42)
+# y_kmeans = kmeans.fit_predict(X)
+
+# print(y_kmeans)
+
+# cluster_1_x = []
+# cluster_1_y = []
+# cluster_2_x = []
+# cluster_2_y = []
+# cluster_3_x = []
+# cluster_3_y = []
+# cluster_4_x = []
+# cluster_4_y = []
+for planet_data in low_gravity_planets:
+  planet_masses.append(planet_data[3])
+  planet_radiuses.append(planet_data[7])
+  planet_types.append(planet_data[6])
